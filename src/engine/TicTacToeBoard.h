@@ -6,6 +6,7 @@ class CTicTacToeBoard
 {
 public:
     CTicTacToeBoard();
+    bool SetBoard(const TicTacToeBoard_T& board);
     bool IsSideWin(const ChessTypes_T& side) const;
     std::vector<GridType_T> GetAllPosibleGrids() const;
     bool CanSidePlay(const ChessTypes_T& side,const GridType_T& grid) const;

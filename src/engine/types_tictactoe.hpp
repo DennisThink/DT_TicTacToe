@@ -10,6 +10,10 @@ enum class ChessTypes_T
 
 struct GridType_T
 {
+    GridType_T() {
+        _xPos = 0;
+        _yPos = 0;
+    }
     int _xPos;
     int _yPos;
 };
@@ -22,6 +26,17 @@ struct TicTacToeBoard_T
                 _board[x][y] = ChessTypes_T::None_Type;
             }
         }
+    }
+
+    bool operator ==(const TicTacToeBoard_T& other) const {
+        for (int x = 0; x < BOARD_WIDTH; x++) {
+            for (int y = 0; y < BOARD_WIDTH; y++) {
+                if (_board[x][y] != other._board[x][y]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     ChessTypes_T _board[BOARD_WIDTH][BOARD_WIDTH];
 };

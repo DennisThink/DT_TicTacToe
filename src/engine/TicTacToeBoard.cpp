@@ -4,9 +4,15 @@ CTicTacToeBoard::CTicTacToeBoard()
 {
 
 }
+
+bool CTicTacToeBoard::SetBoard(const TicTacToeBoard_T& board)
+{
+    m_board = board;
+    return true;
+}
 bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
 {
-    bool bWin = true;
+    bool bWin = false;
     int nCount = 0;
     const auto& data = m_board._board;
 
@@ -136,6 +142,7 @@ bool CTicTacToeBoard::SidePlay(const ChessTypes_T& side,const GridType_T& grid)
     if (CanSidePlay(side, grid))
     {
         m_board._board[grid._xPos][grid._yPos] = side;
+        return true;
     }
     return false;
 }
