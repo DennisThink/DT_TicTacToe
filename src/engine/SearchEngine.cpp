@@ -4,6 +4,7 @@ GridType_T CSearchEngine::GetMove(const TicTacToeBoard_T& board,const ChessTypes
 {
 	m_moveSide = side;
 	m_root = nullptr;
+	GridType_T result;
 	
 	auto newNode = std::make_shared<SearchTreeNode_T>();
 	newNode->m_board = board;
@@ -15,10 +16,16 @@ GridType_T CSearchEngine::GetMove(const TicTacToeBoard_T& board,const ChessTypes
 
 	m_root = newNode;
 	CalculateAllNodes();
-	PrintAllMoveWays();
-	GridType_T result;
-	result._xPos = 0;
-	result._yPos = 0;
+	int nValue = MIN_VALUE;
+	for (auto item : m_root->m_sons)
+	{
+		if (item->m_value > nValue)
+		{
+			nValue = item->m_value;
+			result = item->m_moveGrid;
+		}
+	}
+	//PrintAllMoveWays();
 	return result;
 }
 bool CSearchEngine::IsFillEnd(Shared_TreeNode node)const
@@ -346,14 +353,12 @@ bool CSearchEngine::FillNode(Shared_TreeNode node,const ChessTypes_T playSide, c
 {
 	if (IsFillEnd(node))
 	{
-		CalculateNodeValue(node);
 		node->m_bIsLeaf = true;
 		m_allLeaves.push_back(node);
 		return true;
 	}
 	else
 	{
-		//std::cout << "----------------Depth: " << depth << std::endl;
 		CTicTacToeBoard board;
 		board.SetBoard(node->m_board);
 		auto allPos = board.GetAllPosibleGrids();
@@ -367,29 +372,31 @@ bool CSearchEngine::FillNode(Shared_TreeNode node,const ChessTypes_T playSide, c
 				board.SidePlay(side, item);
 				bHaveSon = true;
 				auto boardData = board.GetBoard();
-				bool bAlreadySave = false;
-				for (auto item : m_allBoards)
-				{
-					if (item == boardData)
+				/* {
+					bool bAlreadySave = false;
+					for (auto item : m_allBoards)
 					{
-						bAlreadySave = true;
-						break;
+						if (item == boardData)
+						{
+							bAlreadySave = true;
+							break;
+						}
 					}
-				}
-				if (!bAlreadySave)
-				{
-					m_allBoards.push_back(boardData);
-				}
+					if (!bAlreadySave)
+					{
+						m_allBoards.push_back(boardData);
+					}
+				}*/
 
 				auto newNode = std::make_shared<SearchTreeNode_T>();
 				newNode->m_board = boardData;
 				newNode->m_parent = node;
 				newNode->m_depth = depth;
 				newNode->m_playSide = GetOtherSide(node->m_playSide);
+				newNode->m_moveGrid = item;
 				node->m_sons.push_back(newNode);
-
+				board.SetBoard(oldBoard.GetBoard());
 			}
-			board.SetBoard(oldBoard.GetBoard());
 		}
 		if (bHaveSon)
 		{

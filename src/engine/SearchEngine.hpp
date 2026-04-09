@@ -2,6 +2,7 @@
 #define _SEARCH_ENGINE_H_
 #include "TicTacToeBoard.h"
 #include <memory>
+#include <iostream>
 struct SearchTreeNode_T;
 using Shared_TreeNode = std::shared_ptr<SearchTreeNode_T>;
 using Weaked_TreeNode = std::weak_ptr<SearchTreeNode_T>;
@@ -23,7 +24,11 @@ struct SearchTreeNode_T
 		m_playSide = ChessTypes_T::None_Type;
 		m_sons.clear();
 	}
+	virtual ~SearchTreeNode_T(){
+		//std::cout << "ID destroy: " << m_id << std::endl;
+	}
 	Weaked_TreeNode m_parent;
+	GridType_T m_moveGrid;
 	int m_depth;
 	TicTacToeBoard_T m_board;
 	bool m_bValueCalculated;
@@ -38,6 +43,7 @@ class CSearchEngine
 {
 public:
 	GridType_T GetMove(const TicTacToeBoard_T& board,const ChessTypes_T side);
+	bool Clean();
 private:
 	bool CreatNote(const TicTacToeBoard_T& board);
 	bool FillNode(Shared_TreeNode node,const ChessTypes_T playSide,const ChessTypes_T side,const int depth);
