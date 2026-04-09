@@ -7,7 +7,13 @@ CTicTacToeBoard::CTicTacToeBoard()
 
 bool CTicTacToeBoard::SetBoard(const TicTacToeBoard_T& board)
 {
-    m_board = board;
+    for (int x = 0; x < BOARD_WIDTH; x++)
+    {
+        for (int y = 0; y < BOARD_WIDTH; y++)
+        {
+            m_board._board[x][y] = board._board[x][y];
+        }
+    }
     return true;
 }
 bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
@@ -24,7 +30,7 @@ bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
         {
             if (data[x][y] == side)
             {
-                nCount++;
+                nCount=nCount+1;
             }
         }
         if (nCount == BOARD_WIDTH)
@@ -46,7 +52,7 @@ bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
         {
             if (data[x][y] == side)
             {
-                nCount++;
+                nCount = nCount + 1;
             }
         }
         if (nCount == BOARD_WIDTH)
@@ -64,10 +70,9 @@ bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
     nCount = 0;
     for (int x = 0; x < BOARD_WIDTH; x++)
     {
-       
         if (data[x][x] == side)
         {
-            nCount++;
+            nCount = nCount + 1;
         }
     }
     if (nCount == BOARD_WIDTH)
@@ -83,10 +88,9 @@ bool CTicTacToeBoard::IsSideWin(const ChessTypes_T& side) const
     nCount = 0;
     for (int x = 0; x < BOARD_WIDTH; x++)
     {
-
         if (data[x][BOARD_WIDTH-x-1] == side)
         {
-            nCount++;
+            nCount = nCount + 1;
         }
     }
     if (nCount == BOARD_WIDTH)

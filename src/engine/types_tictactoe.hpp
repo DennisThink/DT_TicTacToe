@@ -1,5 +1,6 @@
 #ifndef _TYPES_TIC_TAC_TOE_H_
 #define _TYPES_TIC_TAC_TOE_H_
+#include <string>
 const static int BOARD_WIDTH=3;
 enum class ChessTypes_T
 {
@@ -40,4 +41,5 @@ struct TicTacToeBoard_T
     }
     ChessTypes_T _board[BOARD_WIDTH][BOARD_WIDTH];
 };
+std::string ToString(const ChessTypes_T& side);
 #endif

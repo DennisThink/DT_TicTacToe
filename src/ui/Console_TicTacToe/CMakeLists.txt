@@ -3,5 +3,6 @@ project(Console_TicTacToe)
 include_directories(../../engine/)
 SET(SOURCE_FILE ./Console_TicTacToe.cpp
 ../../engine/TicTacToeBoard.cpp
-../../engine/SearchEngine.cpp)
+../../engine/SearchEngine.cpp
+../../engine/types_tictactoe.cpp)
 add_executable(${PROJECT_NAME} ${SOURCE_FILE})
