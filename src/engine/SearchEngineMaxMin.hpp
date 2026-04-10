@@ -2,7 +2,7 @@
 #define _SEARCH_ENGINE_H_
 #include "TicTacToeBoard.h"
 #include "SearchEngineBase.hpp"
-class CSearchEngine
+class CSearchEngineMaxMin
 {
 public:
 	GridType_T GetMove(const TicTacToeBoard_T& board,const ChessTypes_T side);

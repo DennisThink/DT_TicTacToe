@@ -1,6 +1,6 @@
-#include "SearchEngine.hpp"
+#include "SearchEngineMaxMin.hpp"
 #include <iostream>
-GridType_T CSearchEngine::GetMove(const TicTacToeBoard_T& board,const ChessTypes_T side)
+GridType_T CSearchEngineMaxMin::GetMove(const TicTacToeBoard_T& board,const ChessTypes_T side)
 {
 	m_moveSide = side;
 	m_root = nullptr;
@@ -28,7 +28,7 @@ GridType_T CSearchEngine::GetMove(const TicTacToeBoard_T& board,const ChessTypes
 	//PrintAllMoveWays();
 	return result;
 }
-bool CSearchEngine::IsFillEnd(Shared_TreeNode node)const
+bool CSearchEngineMaxMin::IsFillEnd(Shared_TreeNode node)const
 {
 	CTicTacToeBoard board;
 	board.SetBoard(node->m_board);
@@ -56,7 +56,7 @@ bool CSearchEngine::IsFillEnd(Shared_TreeNode node)const
 	}
 	return false;
 }
-bool CSearchEngine::CheckSaveLevelNodes(const std::vector<Shared_TreeNode>& nodes)const
+bool CSearchEngineMaxMin::CheckSaveLevelNodes(const std::vector<Shared_TreeNode>& nodes)const
 {
 	for (const auto& item : nodes)
 	{
@@ -79,7 +79,7 @@ bool CSearchEngine::CheckSaveLevelNodes(const std::vector<Shared_TreeNode>& node
 	return true;
 }
 
-bool CSearchEngine::CalculateLevelNodes(std::vector<Shared_TreeNode>& nodes)
+bool CSearchEngineMaxMin::CalculateLevelNodes(std::vector<Shared_TreeNode>& nodes)
 {
 	for (auto& item : nodes)
 	{
@@ -90,7 +90,7 @@ bool CSearchEngine::CalculateLevelNodes(std::vector<Shared_TreeNode>& nodes)
 	}
 	return true;
 }
-void CSearchEngine::PrintSingleNode(Shared_TreeNode node)const
+void CSearchEngineMaxMin::PrintSingleNode(Shared_TreeNode node)const
 {
 	
 	CTicTacToeBoard board;
@@ -105,7 +105,7 @@ void CSearchEngine::PrintSingleNode(Shared_TreeNode node)const
 	board.PrintBoard();
 
 }
-void CSearchEngine::PrintNodeSons(Shared_TreeNode node)const
+void CSearchEngineMaxMin::PrintNodeSons(Shared_TreeNode node)const
 {
 	if (node)
 	{
@@ -120,7 +120,7 @@ void CSearchEngine::PrintNodeSons(Shared_TreeNode node)const
 	}
 	
 }
-void CSearchEngine::PrintFillNode(Shared_TreeNode node)const
+void CSearchEngineMaxMin::PrintFillNode(Shared_TreeNode node)const
 {
 	std::cout << "---------------Print Fill Node------------------" << std::endl;
 	std::vector<Shared_TreeNode> nodeVec;
@@ -140,7 +140,7 @@ void CSearchEngine::PrintFillNode(Shared_TreeNode node)const
 	}
 	std::cout << "---------------Print Fill Node------------------" << std::endl;
 }
-bool CSearchEngine::CalculateTreeNodeValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateTreeNodeValue(Shared_TreeNode& node)
 {
 	int nMinValue = MAX_VALUE;
 	int nMaxValue = MIN_VALUE;
@@ -188,7 +188,7 @@ bool CSearchEngine::CalculateTreeNodeValue(Shared_TreeNode& node)
 	return bCanCalculated;
 }
 
-bool CSearchEngine::CalculateNodeValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateNodeValue(Shared_TreeNode& node)
 {
 	if (node->m_sons.empty())
 	{
@@ -208,7 +208,8 @@ bool CSearchEngine::CalculateNodeValue(Shared_TreeNode& node)
 	}
 	return true;
 }
-ChessTypes_T CSearchEngine::GetOtherSide(const ChessTypes_T& side)
+
+ChessTypes_T CSearchEngineMaxMin::GetOtherSide(const ChessTypes_T& side)
 {
 	ChessTypes_T otherSide = ChessTypes_T::None_Type;
 	if (side == ChessTypes_T::X_Type)
@@ -221,7 +222,7 @@ ChessTypes_T CSearchEngine::GetOtherSide(const ChessTypes_T& side)
 	}
 	return otherSide;
 }
-bool CSearchEngine::CalculateLeafValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateLeafValue(Shared_TreeNode& node)
 {
 	ChessTypes_T otherSide = ChessTypes_T::None_Type;
 	if (node->m_playSide == ChessTypes_T::X_Type)
@@ -272,7 +273,7 @@ bool CSearchEngine::CalculateLeafValue(Shared_TreeNode& node)
 	}
 	return true;
 }
-void CSearchEngine::PrintAllMoveWays()
+void CSearchEngineMaxMin::PrintAllMoveWays()
 {
 	std::vector<Shared_TreeNode> uniqueNodes;
 	bool bFind = false;
@@ -303,7 +304,7 @@ void CSearchEngine::PrintAllMoveWays()
 		std::cout << "------------------------------------------------------------------" << std::endl;
 	}
 }
-bool CSearchEngine::CalculateAllNodes()
+bool CSearchEngineMaxMin::CalculateAllNodes()
 {
 	CalculateLevelNodes(m_allLeaves);
 	CheckSaveLevelNodes(m_allLeaves);
@@ -349,7 +350,7 @@ bool CSearchEngine::CalculateAllNodes()
 	}
 	return false;
 }
-bool CSearchEngine::FillNode(Shared_TreeNode node,const ChessTypes_T playSide, const ChessTypes_T side,const int depth)
+bool CSearchEngineMaxMin::FillNode(Shared_TreeNode node,const ChessTypes_T playSide, const ChessTypes_T side,const int depth)
 {
 	if (IsFillEnd(node))
 	{

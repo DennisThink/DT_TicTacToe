@@ -1,6 +1,6 @@
 ﻿
 #include "QtTicTacToe_Board.hpp"
-#include "SearchEngine.hpp"
+#include "SearchEngineMaxMin.hpp"
 #include <QMessageBox>
 // 纯图形界面：只负责绘制棋盘和传递点击坐标，不包含任何游戏逻辑
 BoardWidget::BoardWidget(QWidget *parent) : QWidget(parent)
@@ -78,7 +78,7 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
             }
 
             {
-                CSearchEngine oEngine;
+                CSearchEngineMaxMin oEngine;
                 GridType_T oMove = oEngine.GetMove(m_board.GetBoard(), ChessTypes_T::O_Type);
                 if (m_board.CanSidePlay(ChessTypes_T::O_Type, oMove))
                 {

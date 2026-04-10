@@ -1,6 +1,6 @@
 #include <iostream>
 #include "TicTacToeBoard.h"
-#include "SearchEngine.hpp"
+#include "SearchEngineMaxMin.hpp"
 #include "SearchEngineConsole.hpp"
 int TwoComputePlay(int argc,char * argv[])
 {
@@ -17,7 +17,7 @@ int TwoComputePlay(int argc,char * argv[])
     while ((!xWin) && (!oWin))
     {
         {
-            CSearchEngine xEngine;
+            CSearchEngineMaxMin xEngine;
             xMove = xEngine.GetMove(board.GetBoard(), ChessTypes_T::X_Type);
             if (board.CanSidePlay(xSide, xMove))
             {
@@ -30,7 +30,7 @@ int TwoComputePlay(int argc,char * argv[])
         }
         board.PrintBoard();
         {
-            CSearchEngine oEngine;
+            CSearchEngineMaxMin oEngine;
             oMove = oEngine.GetMove(board.GetBoard(), ChessTypes_T::O_Type);
             if (board.CanSidePlay(oSide, oMove))
             {
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
         }
         board.PrintBoard();
         {
-            CSearchEngine oEngine;
+            CSearchEngineMaxMin oEngine;
             oMove = oEngine.GetMove(board.GetBoard(), ChessTypes_T::O_Type);
             if (board.CanSidePlay(oSide, oMove))
             {

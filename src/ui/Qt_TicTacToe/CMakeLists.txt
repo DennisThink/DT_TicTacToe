@@ -18,7 +18,7 @@ add_executable(Qt_TicTacToe
     Qt_TicTacToe.cpp
     QtTicTacToe_Board.cpp
 ../../engine/TicTacToeBoard.cpp
-../../engine/SearchEngine.cpp
+../../engine/SearchEngineMaxMin.cpp
 ../../engine/types_tictactoe.cpp
 ../../engine/SearchEngineBase.cpp
 ../../engine/SearchEngineConsole.cpp

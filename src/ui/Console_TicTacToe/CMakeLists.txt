@@ -3,7 +3,7 @@ project(Console_TicTacToe)
 include_directories(../../engine/)
 SET(SOURCE_FILE ./Console_TicTacToe.cpp
 ../../engine/TicTacToeBoard.cpp
-../../engine/SearchEngine.cpp
+../../engine/SearchEngineMaxMin.cpp
 ../../engine/types_tictactoe.cpp
 ../../engine/SearchEngineBase.cpp
 ../../engine/SearchEngineConsole.cpp)
