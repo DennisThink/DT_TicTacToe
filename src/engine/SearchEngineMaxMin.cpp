@@ -12,10 +12,9 @@ GridType_T CSearchEngineMaxMin::GetMove(const TicTacToeBoard_T& board,const Ches
 	newNode->m_depth = 0;
 	newNode->m_playSide = side;
 	newNode->m_bValueCalculated = false;
-	FillNode(newNode, side,side,1);
-
 	m_root = newNode;
-	CalculateAllNodes();
+	CreateSearchTree(newNode, side,side,1);
+	CalculateValueOfSearchTree();
 	int nValue = MIN_VALUE;
 	for (auto item : m_root->m_sons)
 	{
@@ -25,10 +24,9 @@ GridType_T CSearchEngineMaxMin::GetMove(const TicTacToeBoard_T& board,const Ches
 			result = item->m_moveGrid;
 		}
 	}
-	//PrintAllMoveWays();
 	return result;
 }
-bool CSearchEngineMaxMin::IsFillEnd(Shared_TreeNode node)const
+bool CSearchEngineMaxMin::IsBoardStateCheckMate(const Shared_TreeNode node)const
 {
 	CTicTacToeBoard board;
 	board.SetBoard(node->m_board);
@@ -140,7 +138,7 @@ void CSearchEngineMaxMin::PrintFillNode(Shared_TreeNode node)const
 	}
 	std::cout << "---------------Print Fill Node------------------" << std::endl;
 }
-bool CSearchEngineMaxMin::CalculateTreeNodeValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateTreeNodeValue(Shared_TreeNode& node) const
 {
 	int nMinValue = MAX_VALUE;
 	int nMaxValue = MIN_VALUE;
@@ -188,14 +186,14 @@ bool CSearchEngineMaxMin::CalculateTreeNodeValue(Shared_TreeNode& node)
 	return bCanCalculated;
 }
 
-bool CSearchEngineMaxMin::CalculateNodeValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateNodeValue(Shared_TreeNode& node)const
 {
 	if (node->m_sons.empty())
 	{
-		bool bResult =  CalculateLeafValue(node);
+		bool bResult =  CalculateLeafNodeValue(node);
 		if (node->m_value == DEFAULT_VALUE)
 		{
-			bResult = CalculateLeafValue(node);
+			bResult = CalculateLeafNodeValue(node);
 		}
 	}
 	else
@@ -222,7 +220,7 @@ ChessTypes_T CSearchEngineMaxMin::GetOtherSide(const ChessTypes_T& side)
 	}
 	return otherSide;
 }
-bool CSearchEngineMaxMin::CalculateLeafValue(Shared_TreeNode& node)
+bool CSearchEngineMaxMin::CalculateLeafNodeValue(Shared_TreeNode& node) const
 {
 	ChessTypes_T otherSide = ChessTypes_T::None_Type;
 	if (node->m_playSide == ChessTypes_T::X_Type)
@@ -304,7 +302,7 @@ void CSearchEngineMaxMin::PrintAllMoveWays()
 		std::cout << "------------------------------------------------------------------" << std::endl;
 	}
 }
-bool CSearchEngineMaxMin::CalculateAllNodes()
+bool CSearchEngineMaxMin::CalculateValueOfSearchTree()
 {
 	CalculateLevelNodes(m_allLeaves);
 	CheckSaveLevelNodes(m_allLeaves);
@@ -350,9 +348,9 @@ bool CSearchEngineMaxMin::CalculateAllNodes()
 	}
 	return false;
 }
-bool CSearchEngineMaxMin::FillNode(Shared_TreeNode node,const ChessTypes_T playSide, const ChessTypes_T side,const int depth)
+bool CSearchEngineMaxMin::CreateSearchTree(Shared_TreeNode node,const ChessTypes_T playSide, const ChessTypes_T side,const int depth)
 {
-	if (IsFillEnd(node))
+	if (IsBoardStateCheckMate(node))
 	{
 		node->m_bIsLeaf = true;
 		m_allLeaves.push_back(node);
@@ -406,11 +404,11 @@ bool CSearchEngineMaxMin::FillNode(Shared_TreeNode node,const ChessTypes_T playS
 			{
 				if (side == ChessTypes_T::X_Type)
 				{
-					FillNode(item, playSide, ChessTypes_T::O_Type, depthNew);
+					CreateSearchTree(item, playSide, ChessTypes_T::O_Type, depthNew);
 				}
 				else if (side == ChessTypes_T::O_Type)
 				{
-					FillNode(item, playSide, ChessTypes_T::X_Type, depthNew);
+					CreateSearchTree(item, playSide, ChessTypes_T::X_Type, depthNew);
 				}
 			}
 		}

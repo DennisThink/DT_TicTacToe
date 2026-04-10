@@ -25,7 +25,6 @@ struct SearchTreeNode_T
 		m_sons.clear();
 	}
 	virtual ~SearchTreeNode_T() {
-		//std::cout << "ID destroy: " << m_id << std::endl;
 	}
 	Weaked_TreeNode m_parent;
 	GridType_T m_moveGrid;
